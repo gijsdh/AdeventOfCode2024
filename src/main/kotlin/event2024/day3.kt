@@ -28,6 +28,7 @@ private fun calculateSum(matchesPart2: Sequence<MatchResult>): Int {
             stop = true
             continue
         }
+        // results group values are in the following form: [mul(427,266), 427, 266]
         sum += match.groupValues[1].toInt() * match.groupValues[2].toInt()
     }
     return sum
