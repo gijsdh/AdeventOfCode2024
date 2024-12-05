@@ -33,5 +33,3 @@ private fun calculateSum(matchesPart2: Sequence<MatchResult>): Int {
     }
     return sum
 }
-
-
