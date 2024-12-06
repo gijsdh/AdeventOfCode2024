@@ -17,6 +17,7 @@ fun main(args: Array<String>) {
     println("Solution part 1 - ${vistited.size}")
 }
 
+
 private fun simulate(position: Pair<Int, Int>, map: List<List<String>>): MutableSet<Pair<Int, Int>> {
     var position1 = position
     var vistited = mutableSetOf<Pair<Int, Int>>()
@@ -25,7 +26,6 @@ private fun simulate(position: Pair<Int, Int>, map: List<List<String>>): Mutable
 
     var direction = 0
     while (true) {
-
         var newPos =
             Pair(position1.first + directions[direction].first, position1.second + directions[direction].second)
         if (!isValidIndex(newPos, map.size, map[0].size)) break

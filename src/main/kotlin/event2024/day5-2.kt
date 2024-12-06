@@ -39,16 +39,25 @@ fun main(args: Array<String>) {
             sum += numbers[numbers.size / 2]
         } else {
 
+
+
             // Find the degrees of the nodes.
             val Degree: MutableMap<Int, Int> = mutableMapOf();
             for (number in numbers) {
                 Degree[number] = (constraintsBefore[number] ?: emptyList<Int>()).toSet().intersect(numbers.toSet()).size
             }
 
-            println(numbers)
-
-            println(Degree)
-
+//           Kahn's algorithm
+//            L ← Empty list that will contain the sorted elements
+//            S ← Set of all nodes with no incoming edge
+//
+//            while S is not empty do
+//                remove a node n from S
+//                        add n to L
+//                        for each node m with an edge e from n to m do
+//                remove edge e from the graph
+//                        if m has no other incoming edges then
+//                            insert m into S
 
             val S: LinkedList<Int> = LinkedList<Int>();
             val L: MutableList<Int> = mutableListOf()
@@ -78,6 +87,4 @@ fun main(args: Array<String>) {
 
     println(sum)
     println(sum2)
-
-
 }

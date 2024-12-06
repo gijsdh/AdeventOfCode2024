@@ -12,6 +12,7 @@ fun main(args: Array<String>) {
         }
     }
 
+    // Improvement to run time is to only place obstacles on initial path of the guard.
     var sum = 0
     for (i in 0 until map.size) {
         for (j in 0 until map[0].size) {
