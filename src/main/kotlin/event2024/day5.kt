@@ -65,4 +65,3 @@ fun main(args: Array<String>) {
 
     println("Solution part 2 ${sum2}")
 }
-
