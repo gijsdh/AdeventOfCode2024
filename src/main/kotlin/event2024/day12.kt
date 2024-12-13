@@ -65,7 +65,6 @@ fun countSide(neighbours: MutableSet<Triple<Int, Int, Int>>): Int {
     return side;
 }
 
-
 private fun dfsSides(
     i: Int,
     j: Int,
