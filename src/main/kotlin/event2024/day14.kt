@@ -49,7 +49,7 @@ private fun partTwo(list: MutableList<Drone>, i: Int, maxJ: Int, maxI: Int) {
     // we assume the Christmas tree is some connected cluster of drones.
     // If its big it might be the tree
     if (max > 50) {
-        println("--------Time ${i + 1}")
+        println("--------Time ${i}")
         printMap(setTwo, maxJ, maxI)
     }
 }
@@ -74,9 +74,9 @@ private fun dfsConnected(
 }
 
 fun printMap(set: MutableSet<Pair<Int, Int>>, maxJ: Int, maxI: Int) {
-    for (i in 0 until maxJ) {
-        for (j in 0 until maxI) {
-            if (set.contains(Pair(i, j))) {
+    for (i in 0 until maxI) {
+        for (j in 0 until maxJ ) {
+            if (set.contains(Pair(j, i))) {
                 print("#")
             } else {
                 print(".")
@@ -109,4 +109,3 @@ class Drone(var position: Pair<Int, Int>, var speed: Pair<Int, Int>) {
         return "Setup(position=$position, speed=$speed)"
     }
 }
-
