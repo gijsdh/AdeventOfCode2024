@@ -86,7 +86,6 @@ private fun calculate(
 
                 if (boxes.contains(loc)) continue
                 boxes.add(loc)
-
                 val (x, y) = Pair(loc.first + dir.first, loc.second + dir.second)
 
                 if (grid[x][y] == "#") {
