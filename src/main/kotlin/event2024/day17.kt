@@ -59,6 +59,7 @@ fun runProgram(a: Long, b: Long, c: Long, instructions: List<Long>, partTwo: Boo
         var optCode = instructions[index]
         var operand = instructions[index + 1]
 
+        //bug when I set to small a,b,c
         var combo = when (operand) {
             in 0L..<4L -> operand
             4L -> A
@@ -79,7 +80,6 @@ fun runProgram(a: Long, b: Long, c: Long, instructions: List<Long>, partTwo: Boo
                     continue
                 }
             }
-
             4L -> B = B xor C
             5L -> {
                 result.add(combo.mod(8L))
@@ -87,7 +87,6 @@ fun runProgram(a: Long, b: Long, c: Long, instructions: List<Long>, partTwo: Boo
                     return result.dropLast(1).toMutableList()
                 }
             }
-
             6L -> B = (A / Math.pow(2.0, combo.toDouble())).toLong()
             7L -> C = (A / Math.pow(2.0, combo.toDouble())).toLong()
         }
@@ -95,11 +94,5 @@ fun runProgram(a: Long, b: Long, c: Long, instructions: List<Long>, partTwo: Boo
         index += 2
     }
 
-    //println("A=$A, B=$B, C=$C")
     return result
 }
-
-
-//5,1,0,1,3,1,1,6,7
-//1,6,3,6,5,6,5,1,7
-

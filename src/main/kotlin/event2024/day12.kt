@@ -65,6 +65,7 @@ fun countSide(neighbours: MutableSet<Triple<Int, Int, Int>>): Int {
     return side;
 }
 
+// This just removes all cells belonging to side.
 private fun dfsSides(
     i: Int,
     j: Int,

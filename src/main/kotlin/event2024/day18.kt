@@ -18,7 +18,6 @@ fun main(args: Array<String>) {
         var line = lines[i]
         set.add(Pair(line.last(), line.first()))
     }
-
     println(findMinimumCostPath(L, L, set, Pair(0, 0), end))
 
     for (i in size until lines.size) {
@@ -31,7 +30,6 @@ fun main(args: Array<String>) {
             break
         }
     }
-
 }
 
 
