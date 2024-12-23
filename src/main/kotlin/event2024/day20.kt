@@ -13,6 +13,8 @@ fun main(args: Array<String>) {
 
     var start = Pair(-1, -1)
     var end = Pair(-1, -1)
+    maxI = map.size
+    maxJ = map[0].size
 
     for (i in map.indices) {
         for (j in map[0].indices) {
@@ -21,22 +23,25 @@ fun main(args: Array<String>) {
         }
     }
 
-    var route = getPath(start, map, end)
+    val route = getPath(start, map, end)
     println(simulateCheating(route, 2))
     println(simulateCheating(route, 20))
 }
 
+// we run through all the nodes of the route, and BFS to all reachable nodes which also lie on the route.
+// Then by using the saved distance travelled map, we can calculate how much that cheating route saved.
+// The BFS is expensive for 20 depth still runs in 2s, maybe just simulate two ranges (-21,21) on i and j would also work.
 private fun simulateCheating(
     route: MutableMap<Pair<Int, Int>, Long>,
     depth: Int
 ): Int {
     var count = 0
     for (key in route.keys) {
-        var set = mutableSetOf<Pair<Int, Int>>()
-        BFSReachable(key.first, key.second, depth, set)
+        val set = mutableSetOf<Pair<Int, Int>>()
+        bfsReachable(key.first, key.second, depth, set)
         for (cheat in set) {
             if (route.containsKey(cheat)) {
-                var saved = route[cheat]!! - route[key]!! - manhattanDistance(cheat, key)
+                val saved = route[cheat]!! - route[key]!! - manhattanDistance(cheat, key)
                 if (saved >= 100) count++
             }
         }
@@ -44,13 +49,16 @@ private fun simulateCheating(
     return count
 }
 
+private var maxI: Int = -1
+private var maxJ: Int = -1
+
 // 983905 correct
 
 fun manhattanDistance(a: Pair<Int, Int>, b: Pair<Int, Int>): Int = abs(a.first - b.first) + abs(a.second - b.second)
 
 // BUG DFS with depth.
 
-private fun BFSReachable(
+private fun bfsReachable(
     i: Int,
     j: Int,
     depth: Int,
@@ -74,18 +82,21 @@ private fun BFSReachable(
             val Y = y + jth[k]
 
             val new = Pair(X, Y)
-            if (manhattanDistance(start, new) <= depth && !set.contains(new)) {
+            if (manhattanDistance(start, new) <= depth && !set.contains(new) && isValidIndex(X, Y, maxI, maxJ)) {
                 dequeue.add(new)
             }
         }
     }
 }
 
+
+// Dijkstra to find path, a bit too much as there is only one path.
 private fun getPath(
     start: Pair<Int, Int>,
     map: List<List<String>>,
     end: Pair<Int, Int>
 ): MutableMap<Pair<Int, Int>, Long> {
+
     val comparByCost: Comparator<CostOne> = compareBy { it.costValue }
     val costQueue = PriorityQueue(comparByCost)
     var visted = mutableSetOf<Pair<Int, Int>>()
