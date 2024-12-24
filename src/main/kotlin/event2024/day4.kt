@@ -6,8 +6,8 @@ fun main(args: Array<String>) {
     var count2 = 0
     for (i in 0 until map.size) {
         for (j in 0 until map[0].size) {
-            count+= findNeighbours(map, Pair(i, j))
-            count2+= findNeighbours2(map, Pair(i, j))
+            count += findNeighbours(map, Pair(i, j))
+            count2 += findNeighbours2(map, Pair(i, j))
         }
     }
     println("Solution part 1 ${count}")

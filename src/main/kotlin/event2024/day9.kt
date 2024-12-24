@@ -25,7 +25,6 @@ fun main(args: Array<String>) {
         var size = file.second
 
         while (true) {
-
             if (indexS > index) {
                 break
             }

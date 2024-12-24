@@ -3,6 +3,8 @@ import java.util.*
 fun main(args: Array<String>) {
     val input = getResourceAsText("input.txt")
 
+    println(permute(listOf(1,2,3,4)))
+
     var lines = input.lines()
 
     var numbers = listOf(

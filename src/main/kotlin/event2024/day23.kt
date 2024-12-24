@@ -7,7 +7,6 @@ fun main(args: Array<String>) {
 
     var lines = input.lines().map { it.split("-") }
 
-    println(lines)
 
     for (line in lines) {
         var pair = line[0] to line[1]
@@ -15,12 +14,14 @@ fun main(args: Array<String>) {
         map.merge(pair.second, mutableSetOf(pair.first)) { a, b -> a.plus(b).toMutableSet() }
     }
 
-    var sets: MutableSet<MutableSet<String>> = mutableSetOf(mutableSetOf<String>())
-    for (key in map.keys) {
-        sets.addAll(findTriangles(key, map))
-    }
-    println(sets.filter { it.filter { it[0] == 't' }.isNotEmpty() }.size)
+    println(map.keys.size)
 
+    var partOne = map.keys
+        .fold(setOf(setOf<String>())) { acc, key -> acc.plus(findTriangles(key, map)) }
+        .filter { it.any { it[0] == 't' } }
+        .size
+
+    println(partOne)
 
     var allCliques = mutableSetOf(mutableSetOf<String>())
     bronKerbosch(mutableSetOf(), map.keys.toMutableSet(), mutableSetOf(), allCliques)
