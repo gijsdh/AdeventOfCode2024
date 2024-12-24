@@ -73,7 +73,7 @@ var map = mutableMapOf<String, MutableSet<String>>()
 //
 //   ⋃ -> UNION or [1,2,3] ⋃ [4,5] -> [1,2,3,4,5]
 //   ⋂ -> intersect or [1,2,3] ⋃ [1,3] -> [1,3]
-//   \ -> remove    [1,2,3] ⋃ [1] -> [2,3]
+//   \ -> remove    [1,2,3] \ [1] -> [2,3]
 
 
 fun bronKerbosch(
