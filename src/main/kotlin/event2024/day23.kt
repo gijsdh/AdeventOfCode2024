@@ -4,33 +4,34 @@ import getResourceAsText
 
 fun main(args: Array<String>) {
     val input = getResourceAsText("input.txt")
-
     var lines = input.lines().map { it.split("-") }
-
 
     for (line in lines) {
         var pair = line[0] to line[1]
-        map.merge(pair.first, mutableSetOf(pair.second)) { a, b -> a.plus(b).toMutableSet() }
-        map.merge(pair.second, mutableSetOf(pair.first)) { a, b -> a.plus(b).toMutableSet() }
+        map.merge(pair.first, mutableSetOf(pair.second)) { a, b -> a.plus(b) }
+        map.merge(pair.second, mutableSetOf(pair.first)) { a, b -> a.plus(b) }
     }
 
-    println(map.keys.size)
-
-    var partOne = map.keys
+    val partOne = map.keys
         .fold(setOf(setOf<String>())) { acc, key -> acc.plus(findTriangles(key, map)) }
         .filter { it.any { it[0] == 't' } }
         .size
 
     println(partOne)
 
-    var allCliques = mutableSetOf(mutableSetOf<String>())
+    val allCliques = mutableSetOf(setOf<String>())
     bronKerbosch(mutableSetOf(), map.keys.toMutableSet(), mutableSetOf(), allCliques)
-    println(allCliques.maxBy { it.size }.sorted().joinToString(","))
+    val partTwo = allCliques
+        .maxBy { it.size }
+        .sorted()
+        .joinToString(",")
+    println(partTwo)
+    if ("di,gs,jw,kz,md,nc,qp,rp,sa,ss,uk,xk,yn" != partTwo) throw Exception("shit")
 }
 
 fun findTriangles(
     key: String,
-    map: MutableMap<String, MutableSet<String>>,
+    map: MutableMap<String, Set<String>>,
 ): MutableSet<MutableSet<String>> {
 
     // Create possible triangles of vertex with possible edges.
@@ -40,12 +41,12 @@ fun findTriangles(
     // Check the all the edges of a possible triangle.
     // If the edges intersect add all (pair + intersect) to one of the results.
     for (set in pairs) {
-        var edgesOne = map[set.first]!!
-        var edgesTwo = map[set.second]!!
-        var setInt = edgesOne.intersect(edgesTwo)
+        val edgesOne = map[set.first]!!
+        val edgesTwo = map[set.second]!!
+        val setInt = edgesOne.intersect(edgesTwo)
 
         for (value in setInt) {
-            var local = mutableSetOf<String>()
+            val local = mutableSetOf<String>()
             local.add(set.first)
             local.add(set.second)
             local.add(value)
@@ -56,7 +57,7 @@ fun findTriangles(
     return result
 }
 
-var map = mutableMapOf<String, MutableSet<String>>()
+private var map = mutableMapOf<String, Set<String>>()
 
 // https://en.wikipedia.org/wiki/Bron%E2%80%93Kerbosch_algorithm
 // An algorithm to find all cliques in a graph.
@@ -77,25 +78,26 @@ var map = mutableMapOf<String, MutableSet<String>>()
 
 
 fun bronKerbosch(
-    R: MutableSet<String>,
-    P: MutableSet<String>,
-    X: MutableSet<String>,
-    result: MutableSet<MutableSet<String>>
+    R: Set<String>,
+    P: Set<String>,
+    X: Set<String>,
+    result: MutableSet<Set<String>>
 ) {
     if (P.isEmpty() && X.isEmpty()) {
         if (R.size > 10)
             result.add(R)
         return
     }
-    var localP = P.toMutableSet()
-    var localX = X.toMutableSet()
-    for (v in P) {
-        val R1 = R.union(mutableSetOf(v)).toMutableSet()
-        var P1 = localP.intersect(map[v]!!).toMutableSet()
-        var X1 = localX.intersect(map[v]!!).toMutableSet()
+    val localP = P.toMutableSet()
+    val localX = X.toMutableSet()
+
+    P.forEach {
+        val R1 = R.union(mutableSetOf(it))
+        val P1 = localP.intersect(map[it]!!)
+        val X1 = localX.intersect(map[it]!!)
         bronKerbosch(R1, P1, X1, result)
-        localP.remove(v)
-        localX.add(v)
+        localP.remove(it)
+        localX.add(it)
     }
 }
 
